@@ -1,2 +1,2 @@
 # DTization
-A new method of feature scaling
+A new method for feature scaling
