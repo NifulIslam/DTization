@@ -48,13 +48,14 @@ class DTization:
                 
     def transform(self,X):
         for column in X.columns:
-            x2=X[column].max()
-            x1=X[column].min()
+            qt=data[column].quantile([0.25, 0.5, 0.75])
+            q1=qt.iloc[0]
+            q3=qt.iloc[2]
             y2= 1
             if(column in self.scale.keys()):
                 y2= self.scale[column]
-            y1=0
-            X[column]=X[column].apply( lambda x : y1+ ((x-x1)*(y1-y2)/(x1-x2)) )
+            
+            X[column]=X[column].apply( lambda x : y2* (x-q1) / (q3-q1))
             
     def fit_transform(self, X, y):
         self.fit(X,y)
