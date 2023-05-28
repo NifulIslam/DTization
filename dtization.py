@@ -1,9 +1,9 @@
-# this code works for classification problems. change DecrisionTreeClassifier to DecisionTreeRegressor for regression tasks
 import numpy as np 
 import pandas as pd 
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 class DTization:
-    def __init__(self):
+    def __init__(self,classifier=True):
+        self.classif=classifier
         pass
     def get_column_names_by_tree_levels(self, tree, feature_names):
         column_names = []
@@ -29,6 +29,8 @@ class DTization:
         return column_names
     def fit(self,X,y):
         dt = DecisionTreeClassifier()
+        if(not self.classif):
+            dt = DecisionTreeRegressor()
         dt.fit(X, y)
         priority= self.get_column_names_by_tree_levels(dt.tree_,X.columns)
         d=len(X.columns)
