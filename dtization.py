@@ -1,3 +1,4 @@
+# this code works for classification problems. change DecrisionTreeClassifier to DecisionTreeRegressor for regression tasks
 import numpy as np 
 import pandas as pd 
 from sklearn.tree import DecisionTreeClassifier
