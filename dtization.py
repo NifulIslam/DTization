@@ -29,7 +29,7 @@ class DTization:
     def fit(self,X,y):
         dt = DecisionTreeClassifier()
         dt.fit(X, y)
-        priority= get_column_names_by_tree_levels(dt.tree_,X.columns)
+        priority= self.get_column_names_by_tree_levels(dt.tree_,X.columns)
         d=len(X.columns)
         self.x = np.log(2)/d #ln(2)/d
         self.scale={}
@@ -43,7 +43,7 @@ class DTization:
                 d_prime = d-i
                 self.scale[feature]= np.exp(self.x*d_prime) -1
                 
-    def transform(self,X,y):
+    def transform(self,X):
         for column in X.columns:
             x2=X[column].max()
             x1=X[column].min()
@@ -55,5 +55,5 @@ class DTization:
             
     def fit_transform(self, X, y):
         self.fit(X,y)
-        self.transform(X,y)
+        self.transform(X)
         
