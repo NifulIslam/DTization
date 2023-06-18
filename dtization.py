@@ -32,11 +32,11 @@ class DTization:
         if(not self.classif):
             dt = DecisionTreeRegressor()
         dt.fit(X, y)
-        priority= self.get_column_names_by_tree_levels(dt.tree_,X.columns)
+        self.priority= self.get_column_names_by_tree_levels(dt.tree_,X.columns)
         d=len(X.columns)
         self.x = np.log(2)/d #ln(2)/d
         self.scale={}
-        for i, features in enumerate(priority):
+        for i, features in enumerate(self.priority):
             if(len(features)==0):
                 continue
             
@@ -55,6 +55,9 @@ class DTization:
             if(column in self.scale.keys()):
                 y2= self.scale[column]
             
+            if(q1==q3):
+                X[column]=X[column].apply( lambda x : y2*x)
+                continue    
             X[column]=X[column].apply( lambda x : y2* (x-q1) / (q3-q1))
             
     def fit_transform(self, X, y):
